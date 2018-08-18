@@ -65,6 +65,20 @@
 
     }
 
+    .second-hand{
+      background:white;
+      height: 5px;
+    }
+
+
+
+    .noTransition {
+      -webkit-transition: none !important;
+      -moz-transition: none !important;
+      -o-transition: none !important;
+      transition: none !important;
+}
+
   </style>
 
 
@@ -78,8 +92,16 @@
       const minHand = document.querySelector('.min-hand');
       const hourHand = document.querySelector('.hour-hand');
 
+      const hand = document.querySelector('.hand');
 
-      function setDate(){
+
+
+      function tick(){
+
+        console.log('tick()');
+
+
+
         const now = new Date();
         const seconds = now.getSeconds();
         const minutes = now.getMinutes();
@@ -93,12 +115,32 @@
         minHand.style.transform = `rotate(${minDegrees}deg)`;
         hourHand.style.transform = `rotate(${hourDegrees}deg)`;
 
-        //console.log(seconds);
+
+        //fix issue with hand overshooting transition at :00 each minute
+        //temporarily disable transition effect
+        if(seconds === 0){
+
+          secondHand.classList.add('noTransition');
+          minHand.classList.add('noTransition');
+          hourHand.classList.add('noTransition');
+
+        }
+
+        if(seconds === 1){
+
+          secondHand.classList.remove('noTransition');
+          minHand.classList.remove('noTransition');
+          hourHand.classList.remove('noTransition');
+
+        
+        }
+        
 
       }
 
+    
 
-      setInterval(setDate, 1000);
+      setInterval(tick, 1000);
 
 
   </script>
